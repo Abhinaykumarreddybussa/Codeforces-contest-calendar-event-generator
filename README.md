@@ -1,0 +1,1 @@
+# Codeforces-contest-calendar-event-generator
