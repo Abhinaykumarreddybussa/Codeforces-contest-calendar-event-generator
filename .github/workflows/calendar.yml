@@ -1,0 +1,27 @@
+name: Sync Codeforces to Calendar
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight UTC
+  workflow_dispatch: # Allows you to run it manually
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install requests google-api-python-client google-auth-httplib2 google-auth-oauthlib
+        
+      - name: Create credentials file
+        run: echo '${{ secrets.GCP_CREDENTIALS }}' > credentials.json
+        
+      - name: Run sync script
+        run: python sync_contests.py
