@@ -29,7 +29,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.events']
 creds = service_account.Credentials.from_service_account_file('credentials.json', scopes=SCOPES)
 service = build('calendar', 'v3', credentials=creds)
 
-CALENDAR_ID = 'your_calendar_id@group.calendar.google.com'
+CALENDAR_ID = '22b0904@iitb.ac.in'
 
 # 4. Add Events
 for contest in upcoming_contests:
