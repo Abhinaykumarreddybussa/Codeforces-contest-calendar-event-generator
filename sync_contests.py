@@ -31,13 +31,33 @@ service = build('calendar', 'v3', credentials=creds)
 
 CALENDAR_ID = '22b0904@iitb.ac.in'
 
+# Fetch existing events in the next 7 days to avoid duplicates
+time_min = now.isoformat() + 'Z'
+time_max = (now + datetime.timedelta(days=8)).isoformat() + 'Z'
+events_result = service.events().list(
+    calendarId=CALENDAR_ID,
+    timeMin=time_min,
+    timeMax=time_max,
+    singleEvents=True,
+    orderBy='startTime'
+).execute()
+existing_events = events_result.get('items', [])
+existing_summaries = [event.get('summary') for event in existing_events]
+
 # 4. Add Events
 for contest in upcoming_contests:
+    event_summary = f"Codeforces: {contest['name']}"
+    
+    # Check if event already exists by summary
+    if event_summary in existing_summaries:
+        print(f"Event already exists: {event_summary}")
+        continue
+
     start_time = datetime.datetime.utcfromtimestamp(contest['startTimeSeconds'])
     end_time = start_time + datetime.timedelta(seconds=contest['durationSeconds'])
     
     event = {
-        'summary': f"Codeforces: {contest['name']}",
+        'summary': event_summary,
         'description': f"Link: https://codeforces.com/contests/{contest['id']}",
         'start': {
             'dateTime': start_time.isoformat() + 'Z',
@@ -49,6 +69,5 @@ for contest in upcoming_contests:
         },
     }
     
-    # Check if event already exists (omitted for brevity) then insert
     event_result = service.events().insert(calendarId=CALENDAR_ID, body=event).execute()
     print(f"Event created: {event_result.get('htmlLink')}")
