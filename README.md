@@ -8,11 +8,11 @@ This project fetches upcoming Codeforces contests from the official API and auto
 
 ## Features
 
-- 🔄 **Automatic Contest Fetching**: Retrieves contest data from Codeforces API
-- 📅 **Google Calendar Integration**: Creates events directly in your Google Calendar
-- ⏰ **Smart Filtering**: Configurable filters for contest timing (e.g., next 7 days)
-- 🚫 **Duplicate Prevention**: Checks for existing events before adding new ones
-- 📝 **Event Details**: Each calendar event includes:
+-  **Automatic Contest Fetching**: Retrieves contest data from Codeforces API
+-  **Google Calendar Integration**: Creates events directly in your Google Calendar
+-  **Smart Filtering**: Configurable filters for contest timing (e.g., next 7 days)
+-  **Duplicate Prevention**: Checks for existing events before adding new ones
+-  **Event Details**: Each calendar event includes:
   - Contest name
   - Start and end times
   - Direct link to the contest
@@ -136,7 +136,7 @@ Event created: https://calendar.google.com/calendar/u/0/r/eventedit/...
 
 ## Security Notes
 
-⚠️ **Important**: Never commit `credentials.json` to version control
+**Important**: Never commit `credentials.json` to version control
 - Add `credentials.json` to `.gitignore`
 - In production, use environment variables or secure credential management
 
